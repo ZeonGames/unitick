@@ -1,0 +1,12 @@
+vrfkit.exe      built from https://github.com/wbxs2077/vrfkit @ 278f81b (MIT) + vrfkit-patches.diff
+vrfkit          linux x86_64 build of the same source and patches (glibc), used on Linux and in CI
+r6-dissect.exe  built from https://github.com/redraskal/r6-dissect @ e6c2ca8 (MIT)
+cross-compiled for x86_64-pc-windows-gnu.
+
+vrfkit-patches.diff adds what upstream vrfkit lacks, ported from
+https://github.com/michel-giehl/ValorantReplayParser (MIT):
+  - payload transforms for patches 11.06, 12.06 and 13.04
+  - the 11.06 replay header, which has no skip block after the branch string
+Verified on real replays: 13.04 passes vrfkit's grammar oracle in full; 11.06 and
+12.06 pass 99.9999% of content blocks (one malformed block each).
+Supported patches: 11.06, 12.06, 12.10, 12.11, 13.00, 13.01, 13.02, 13.04.

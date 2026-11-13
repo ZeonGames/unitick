@@ -1,0 +1,31 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_mirage",
+  "frame_every": 4,
+  "server": "eBot :: Astralis vs BetBoom Team",
+  "teams": {
+    "Astralis": [
+      "dev1ce",
+      "Staehr",
+      "stavn",
+      "jabbi",
+      "HooXi"
+    ],
+    "BetBoom Team": [
+      "Boombl4",
+      "Ax1Le",
+      "S1ren",
+      "Magnojez",
+      "ArtFr0st"
+    ]
+  },
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "event": "HLTV pro match",
+  "source": "hltv.org demo via huggingface.co/datasets/aldigobbler/cs2demos (astralis-vs-betboom-m1-mirage.dem)",
+  "unitick_format": 1,
+  "library_key": "hltv:astralis-vs-betboom-m1-mirage"
+}

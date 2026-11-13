@@ -1,0 +1,34 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_mirage",
+  "source": "awpy-fixtures: hltv-de_mirage-2394170.dem",
+  "frame_every": 4,
+  "server": "ESL Match Server #1",
+  "teams": {
+    "Team Vitality": [
+      "ropz",
+      "ZywOo",
+      "mezii",
+      "apEX",
+      "flameZ"
+    ],
+    "B8 Esports": [
+      "s1zzi",
+      "alex666",
+      "npl",
+      "esenthial",
+      "kensizor"
+    ]
+  },
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "event": "IEM Atlanta 2026",
+  "stage": "Group A lower bracket final",
+  "date": "2026-05-13",
+  "hltv_match": 2394170,
+  "result": "Vitality 13-5 B8",
+  "unitick_format": 1
+}

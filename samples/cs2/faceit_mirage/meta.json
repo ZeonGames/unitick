@@ -1,0 +1,29 @@
+{
+ "tick_rate": 64.0,
+ "game": "cs2",
+ "map_name": "de_mirage",
+ "frame_every": 4,
+ "server": "FACEIT.com register to play here",
+ "teams": {
+  "Team A": [
+   "Player 4",
+   "Player 2",
+   "Player 1",
+   "Player 3",
+   "Player 5"
+  ],
+  "Team B": [
+   "Player 6",
+   "Player 8",
+   "Player 10",
+   "Player 9",
+   "Player 7"
+  ]
+ },
+ "eye_height": {
+  "stand": 64.0,
+  "crouch": 46.0
+ },
+ "unitick_format": 1,
+ "source": "awpy-fixtures: mirage.dem"
+}

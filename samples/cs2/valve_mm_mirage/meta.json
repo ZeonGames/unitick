@@ -1,0 +1,14 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_mirage",
+  "frame_every": 4,
+  "server": "Valve Counter-Strike 2 eu_west Server (srcds111-fra2.271.72)",
+  "teams": {},
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "unitick_format": 1,
+  "source": "awpy-fixtures: valve_mirage.dem"
+}

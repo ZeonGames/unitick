@@ -1,0 +1,33 @@
+{
+  "tick_rate": 128.0,
+  "game": "valorant",
+  "map_name": "Juliett",
+  "frame_every": 8,
+  "teams": {
+    "Team A": [
+      "Omen",
+      "Phoenix 2",
+      "Skye",
+      "Fade",
+      "Raze 2"
+    ],
+    "Team B": [
+      "Phoenix",
+      "Raze",
+      "Jett",
+      "Sage",
+      "Cypher"
+    ]
+  },
+  "eye_height": {
+    "stand": 154.0,
+    "crouch": 112.0
+  },
+  "units": "cm",
+  "anonymized": true,
+  "event": "Swiftplay, patch 13.04",
+  "mode": "Swiftplay",
+  "patch": "13.04",
+  "match_id": "valorant:sunset:swiftplay:13.04",
+  "unitick_format": 1
+}

@@ -1,0 +1,33 @@
+{
+  "tick_rate": 128.0,
+  "game": "valorant",
+  "map_name": "Bonsai",
+  "frame_every": 8,
+  "teams": {
+    "Team A": [
+      "Tejo 2",
+      "Reyna",
+      "Jett",
+      "Neon",
+      "Chamber"
+    ],
+    "Team B": [
+      "Phoenix",
+      "Raze",
+      "Sova",
+      "Tejo",
+      "Killjoy"
+    ]
+  },
+  "eye_height": {
+    "stand": 154.0,
+    "crouch": 112.0
+  },
+  "units": "cm",
+  "anonymized": true,
+  "event": "Swiftplay, patch 13.00",
+  "mode": "Swiftplay",
+  "patch": "13.00",
+  "match_id": "valorant:split:swiftplay:13.00",
+  "unitick_format": 1
+}

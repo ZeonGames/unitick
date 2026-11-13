@@ -1,0 +1,357 @@
+diff --git a/crates/vrf-container/src/header.rs b/crates/vrf-container/src/header.rs
+index d583033..e72809f 100644
+--- a/crates/vrf-container/src/header.rs
++++ b/crates/vrf-container/src/header.rs
+@@ -111,6 +111,9 @@ pub struct ReplayHeader {
+ }
+ 
+ /// Parse the header chunk payload.
++/// Smallest value treated as a UE4 version rather than a skip-block length.
++const MIN_UE4_VERSION: u32 = 256;
++
+ pub(crate) fn parse_replay_header(payload: &[u8]) -> Result<ReplayHeader, ContainerError> {
+     let mut reader = BitReader::new(payload);
+ 
+@@ -181,14 +184,21 @@ pub(crate) fn parse_replay_header(payload: &[u8]) -> Result<ReplayHeader, Contai
+     };
+ 
+     // --- Valorant-specific skip bytes -------------------------------------
+-    let valorant_skip_count = read_u32(&mut reader, "valorant skip byte count")?;
+-    let skip_bits_val = u64::from(valorant_skip_count) * 8;
+-    reader
+-        .skip_bits(skip_bits_val)
+-        .map_err(|e| ContainerError::BitIo(e.to_string()))?;
++    // Builds from 12.x on carry a short length-prefixed block here (e.g. the
++    // FString "32"). The first replay builds (11.06) do not: the next u32 is
++    // already the UE4 version (522). A real skip block is a few bytes, a UE4
++    // version is in the hundreds, so the value tells the two layouts apart.
++    let first = read_u32(&mut reader, "valorant skip byte count")?;
++    let ue4_version = if first >= MIN_UE4_VERSION {
++        first
++    } else {
++        reader
++            .skip_bits(u64::from(first) * 8)
++            .map_err(|e| ContainerError::BitIo(e.to_string()))?;
++        read_u32(&mut reader, "UE4 version")?
++    };
+ 
+     // --- UE versions ------------------------------------------------------
+-    let ue4_version = read_u32(&mut reader, "UE4 version")?;
+     let ue5_version = read_u32(&mut reader, "UE5 version")?;
+     let package_version_license = read_u32(&mut reader, "package version license")?;
+ 
+diff --git a/crates/vrf-transform/src/lib.rs b/crates/vrf-transform/src/lib.rs
+index 17a1e86..d1312d9 100644
+--- a/crates/vrf-transform/src/lib.rs
++++ b/crates/vrf-transform/src/lib.rs
+@@ -74,7 +74,7 @@ pub mod helpers;
+ pub mod sbox;
+ pub mod versions;
+ 
+-use versions::{SeededTransform, V12_10, V12_11, V13_00, V13_01, V13_02};
++use versions::{SeededTransform, V11_06, V12_06, V12_10, V12_11, V13_00, V13_01, V13_02, V13_04};
+ use vrf_bitio::{BitError, BitReader, Result as BitResult};
+ 
+ /// Derive the transform seed for a content block.
+@@ -160,6 +160,10 @@ pub fn transform_in_place<T: SeededTransform>(
+ #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+ #[non_exhaustive]
+ pub enum TransformVersion {
++    /// `++Ares-Core+release-11.06`
++    V1106,
++    /// `++Ares-Core+release-12.06`
++    V1206,
+     /// `++Ares-Core+release-12.10`
+     V1210,
+     /// `++Ares-Core+release-12.11`
+@@ -170,15 +174,20 @@ pub enum TransformVersion {
+     V1301,
+     /// `++Ares-Core+release-13.02`
+     V1302,
++    /// `++Ares-Core+release-13.04`
++    V1304,
+ }
+ 
+ /// Every transform this build of the crate knows about.
+-pub const ALL_VERSIONS: [TransformVersion; 5] = [
++pub const ALL_VERSIONS: [TransformVersion; 8] = [
++    TransformVersion::V1106,
++    TransformVersion::V1206,
+     TransformVersion::V1210,
+     TransformVersion::V1211,
+     TransformVersion::V1300,
+     TransformVersion::V1301,
+     TransformVersion::V1302,
++    TransformVersion::V1304,
+ ];
+ 
+ /// A replay whose branch has no registered transform.
+@@ -223,11 +232,14 @@ impl TransformVersion {
+     #[must_use]
+     pub const fn branch(self) -> &'static str {
+         match self {
++            Self::V1106 => V11_06::BRANCH,
++            Self::V1206 => V12_06::BRANCH,
+             Self::V1210 => V12_10::BRANCH,
+             Self::V1211 => V12_11::BRANCH,
+             Self::V1300 => V13_00::BRANCH,
+             Self::V1301 => V13_01::BRANCH,
+             Self::V1302 => V13_02::BRANCH,
++            Self::V1304 => V13_04::BRANCH,
+         }
+     }
+ 
+@@ -240,11 +252,14 @@ impl TransformVersion {
+     /// Transform `buf` in place.
+     pub fn apply(self, buf: &mut [u8], bit_count: usize, seed: u32) -> BitResult<()> {
+         match self {
++            Self::V1106 => transform_in_place::<V11_06>(buf, bit_count, seed),
++            Self::V1206 => transform_in_place::<V12_06>(buf, bit_count, seed),
+             Self::V1210 => transform_in_place::<V12_10>(buf, bit_count, seed),
+             Self::V1211 => transform_in_place::<V12_11>(buf, bit_count, seed),
+             Self::V1300 => transform_in_place::<V13_00>(buf, bit_count, seed),
+             Self::V1301 => transform_in_place::<V13_01>(buf, bit_count, seed),
+             Self::V1302 => transform_in_place::<V13_02>(buf, bit_count, seed),
++            Self::V1304 => transform_in_place::<V13_04>(buf, bit_count, seed),
+         }
+     }
+ 
+diff --git a/crates/vrf-transform/src/versions/mod.rs b/crates/vrf-transform/src/versions/mod.rs
+index efbbbef..656fdc0 100644
+--- a/crates/vrf-transform/src/versions/mod.rs
++++ b/crates/vrf-transform/src/versions/mod.rs
+@@ -29,17 +29,23 @@
+ 
+ use crate::helpers::initial_prng_a;
+ 
++mod v11_06;
++mod v12_06;
+ mod v12_10;
+ mod v12_11;
+ mod v13_00;
+ mod v13_01;
+ mod v13_02;
++mod v13_04;
+ 
++pub use v11_06::V11_06;
++pub use v12_06::V12_06;
+ pub use v12_10::V12_10;
+ pub use v12_11::V12_11;
+ pub use v13_00::V13_00;
+ pub use v13_01::V13_01;
+ pub use v13_02::V13_02;
++pub use v13_04::V13_04;
+ 
+ /// One build's payload transform.
+ ///
+@@ -101,11 +107,14 @@ mod tests {
+             )
+         }
+         vec![
++            row::<V11_06>(),
++            row::<V12_06>(),
+             row::<V12_10>(),
+             row::<V12_11>(),
+             row::<V13_00>(),
+             row::<V13_01>(),
+             row::<V13_02>(),
++            row::<V13_04>(),
+         ]
+     }
+ 
+@@ -131,7 +140,7 @@ mod tests {
+             .filter(|row| row.3)
+             .map(|row| row.0)
+             .collect();
+-        assert_eq!(adding, vec![V12_11::BRANCH]);
++        assert_eq!(adding, vec![V11_06::BRANCH, V12_06::BRANCH, V12_11::BRANCH]);
+     }
+ 
+     #[test]
+diff --git a/crates/vrf-transform/src/versions/v11_06.rs b/crates/vrf-transform/src/versions/v11_06.rs
+new file mode 100644
+index 0000000..a83f2a4
+--- /dev/null
++++ b/crates/vrf-transform/src/versions/v11_06.rs
+@@ -0,0 +1,61 @@
++//! `++Ares-Core+release-11.06`
++//!
++//! The first build that shipped replays. Ported from ValorantReplayParser
++//! (MIT), `ValorantSeededTransform11_06.cs`. Uses the shared S-boxes three
++//! times per word, then a bit reversal and an adjacent-bit swap.
++
++use super::SeededTransform;
++use crate::helpers::{
++    substitute_bytes_u32, substitute_bytes_u64, swap_adjacent_bits_u8, swap_adjacent_bits_u32,
++    swap_adjacent_bits_u64,
++};
++use crate::sbox::{SBOX_8, SBOX_32, SBOX_64};
++
++/// `++Ares-Core+release-11.06`
++pub struct V11_06;
++
++fn reverse_bits64_without_final_16bit_swap(mut v: u64) -> u64 {
++    v = ((v & 0x5555_5555_5555_5555) << 1) | ((v >> 1) & 0x5555_5555_5555_5555);
++    v = ((v & 0x3333_3333_3333_3333) << 2) | ((v >> 2) & 0x3333_3333_3333_3333);
++    v = ((v & 0x0F0F_0F0F_0F0F_0F0F) << 4) | ((v >> 4) & 0x0F0F_0F0F_0F0F_0F0F);
++    v = ((v & 0x00FF_00FF_00FF_00FF) << 8) | ((v >> 8) & 0x00FF_00FF_00FF_00FF);
++    v.rotate_left(32)
++}
++
++impl SeededTransform for V11_06 {
++    const BRANCH: &'static str = "++Ares-Core+release-11.06";
++    const SEED_ADDEND: u32 = 0x3325_e3bd;
++    const INIT_A_OFFSET: u32 = 0x3d;
++    const ADD_OFFSET: bool = true;
++    const TAIL_XOR: u8 = 0xbd;
++
++    fn word64(mut v: u64, state: u32) -> u64 {
++        v = v.wrapping_add(u64::from(state.rotate_right(8)));
++        v = substitute_bytes_u64(v, &SBOX_64);
++        v ^= !u64::from(state.rotate_right(6));
++        v = substitute_bytes_u64(v, &SBOX_64);
++        v = substitute_bytes_u64(v, &SBOX_64);
++        v = reverse_bits64_without_final_16bit_swap(v);
++        swap_adjacent_bits_u64(v)
++    }
++
++    fn word32(mut v: u32, state: u32) -> u32 {
++        v = v.wrapping_add(state.rotate_left(8));
++        v = substitute_bytes_u32(v, &SBOX_32);
++        v ^= state.rotate_left(6);
++        v = substitute_bytes_u32(v, &SBOX_32);
++        v = substitute_bytes_u32(v, &SBOX_32);
++        v = v.reverse_bits();
++        swap_adjacent_bits_u32(v)
++    }
++
++    fn byte(mut v: u8, state: u32) -> u8 {
++        v = v.wrapping_add(state.wrapping_mul(0x0cc6_db61) as u8);
++        v = SBOX_8[v as usize];
++        v ^= state.wrapping_mul(0x001b_0829) as u8;
++        v = SBOX_8[v as usize];
++        v = SBOX_8[v as usize];
++        v = v.reverse_bits();
++        swap_adjacent_bits_u8(v)
++    }
++}
+diff --git a/crates/vrf-transform/src/versions/v12_06.rs b/crates/vrf-transform/src/versions/v12_06.rs
+new file mode 100644
+index 0000000..571d96e
+--- /dev/null
++++ b/crates/vrf-transform/src/versions/v12_06.rs
+@@ -0,0 +1,58 @@
++//! `++Ares-Core+release-12.06`
++//!
++//! Ported from ValorantReplayParser (MIT), `ValorantSeededTransform12_06.cs`.
++//! Older shape than 12.10+: each word is XORed, rotated, offset, then
++//! bit-reversed around a second rotation, and the init-A offset is added.
++
++use super::SeededTransform;
++
++/// `++Ares-Core+release-12.06`
++pub struct V12_06;
++
++/// Full bit reversal of each 32-bit half, then the halves swapped; the final
++/// 16-bit swap of a true 64-bit reversal is left out (as in the original).
++fn reverse_bits64_without_final_16bit_swap(mut v: u64) -> u64 {
++    v = ((v & 0x5555_5555_5555_5555) << 1) | ((v >> 1) & 0x5555_5555_5555_5555);
++    v = ((v & 0x3333_3333_3333_3333) << 2) | ((v >> 2) & 0x3333_3333_3333_3333);
++    v = ((v & 0x0F0F_0F0F_0F0F_0F0F) << 4) | ((v >> 4) & 0x0F0F_0F0F_0F0F_0F0F);
++    v = ((v & 0x00FF_00FF_00FF_00FF) << 8) | ((v >> 8) & 0x00FF_00FF_00FF_00FF);
++    v.rotate_left(32)
++}
++
++impl SeededTransform for V12_06 {
++    const BRANCH: &'static str = "++Ares-Core+release-12.06";
++    const SEED_ADDEND: u32 = 0x8d68_6ca6;
++    const INIT_A_OFFSET: u32 = 0x26;
++    const ADD_OFFSET: bool = true;
++    const TAIL_XOR: u8 = 0xa6;
++
++    fn word64(mut v: u64, state: u32) -> u64 {
++        v ^= !u64::from(state.rotate_right(8));
++        v = v.rotate_right((state.rotate_right(7) % 63) + 1);
++        v = v.wrapping_sub(u64::from(state.rotate_right(6)));
++        v = reverse_bits64_without_final_16bit_swap(v);
++        v = v.rotate_left((state.rotate_right(3) % 63) + 1);
++        v = reverse_bits64_without_final_16bit_swap(v);
++        v.wrapping_sub(u64::from(state.rotate_right(1)))
++    }
++
++    fn word32(mut v: u32, state: u32) -> u32 {
++        v ^= state.rotate_left(8);
++        v = v.rotate_right((state.rotate_left(7) % 31) + 1);
++        v = v.wrapping_sub(state.rotate_left(6));
++        v = v.reverse_bits();
++        v = v.rotate_left((state.rotate_left(3) % 31) + 1);
++        v = v.reverse_bits();
++        v.wrapping_sub(state.rotate_left(1))
++    }
++
++    fn byte(mut v: u8, state: u32) -> u8 {
++        v ^= state.wrapping_mul(0x0cc6_db61) as u8;
++        v = v.rotate_right((state.wrapping_mul(0x0129_59c3) % 7) + 1);
++        v = v.wrapping_sub(state.wrapping_mul(0x001b_0829) as u8);
++        v = v.reverse_bits();
++        v = v.rotate_left((state.wrapping_mul(0x533) % 7) + 1);
++        v = v.reverse_bits();
++        v.wrapping_sub(state.wrapping_mul(0x0b) as u8)
++    }
++}
+diff --git a/crates/vrf-transform/src/versions/v13_04.rs b/crates/vrf-transform/src/versions/v13_04.rs
+new file mode 100644
+index 0000000..7373a84
+--- /dev/null
++++ b/crates/vrf-transform/src/versions/v13_04.rs
+@@ -0,0 +1,50 @@
++//! `++Ares-Core+release-13.04`
++//!
++//! Ported from ValorantReplayParser (MIT), `ValorantSeededTransform13_04.cs`.
++
++use super::SeededTransform;
++use crate::helpers::{swap_adjacent_bits_u8, swap_adjacent_bits_u32, swap_adjacent_bits_u64};
++
++/// `++Ares-Core+release-13.04`
++pub struct V13_04;
++
++impl SeededTransform for V13_04 {
++    const BRANCH: &'static str = "++Ares-Core+release-13.04";
++    const SEED_ADDEND: u32 = 0x076d_c658;
++    const INIT_A_OFFSET: u32 = 0x28;
++    const TAIL_XOR: u8 = 0x58;
++
++    fn word64(mut v: u64, state: u32) -> u64 {
++        v = v.rotate_right((state.rotate_right(7) % 63) + 1);
++        v ^= !u64::from(state.rotate_right(6));
++        v = v.wrapping_sub(u64::from(state.rotate_right(5)));
++        v = swap_adjacent_bits_u64(v);
++        v = v.wrapping_add(u64::from(state.rotate_right(3)));
++        v = v.wrapping_add(u64::from(state.rotate_right(2)));
++        v.rotate_left((state.rotate_right(1) % 63) + 1)
++    }
++
++    fn word32(mut v: u32, state: u32) -> u32 {
++        v = v.rotate_right((state.rotate_left(7) % 31) + 1);
++        v ^= state.rotate_left(6);
++        v = v.wrapping_sub(state.rotate_left(5));
++        v = swap_adjacent_bits_u32(v);
++        v = v.wrapping_add(state.rotate_left(3));
++        v = v.wrapping_add(state.rotate_left(2));
++        v.rotate_left((state.rotate_left(1) % 31) + 1)
++    }
++
++    fn byte(mut v: u8, state: u32) -> u8 {
++        let a = state.wrapping_mul(0x0b);
++        let b = a.wrapping_mul(0x0b);
++        let c = b.wrapping_mul(0x0b);
++        let d = c.wrapping_mul(0x79);
++        let e = d.wrapping_mul(0x0b);
++        let f = e.wrapping_mul(0x0b);
++        v = v.rotate_right((f % 7) + 1);
++        v = (v ^ e as u8).wrapping_sub(d as u8);
++        v = swap_adjacent_bits_u8(v);
++        v = v.wrapping_add(b as u8).wrapping_add(c as u8);
++        v.rotate_left((a % 7) + 1)
++    }
++}

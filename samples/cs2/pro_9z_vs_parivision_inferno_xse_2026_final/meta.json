@@ -1,0 +1,34 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_inferno",
+  "source": "awpy-fixtures: hltv-de_inferno-2395492.dem",
+  "frame_every": 4,
+  "server": "\u5b8c\u7f8e\u4e16\u754c\u7ade\u6280\u5e73\u53f0\u8d5b\u4e8b\u670d\u52a1\u5668",
+  "teams": {
+    "PARIVISION": [
+      "zweih",
+      "HObbit",
+      "slaxejezzz",
+      "Jame",
+      "xiELO"
+    ],
+    "9z": [
+      "HUASOPEEK",
+      "luchov",
+      "dgt",
+      "max",
+      "meyern"
+    ]
+  },
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "event": "XSE Pro League Guangzhou 2026",
+  "stage": "Grand final, map 2",
+  "date": "2026-07-12",
+  "hltv_match": 2395492,
+  "result": "9z 13-10 PARIVISION",
+  "unitick_format": 1
+}

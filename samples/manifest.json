@@ -1,0 +1,137 @@
+{
+ "samples": [
+  {
+   "game": "cs2",
+   "dest": "cs2/raw/valve_mm_mirage.dem",
+   "url": "https://github.com/pnxenopoulos/awpy-fixtures/releases/download/valve-de_mirage-472514809/valve-de_mirage-472514809.dem",
+   "sha256": "2e0a4f9aa257af9d8e2c934dcbd6cb6a8c48483c264904ecc27218dd7d360506",
+   "default": true
+  },
+  {
+   "game": "cs2",
+   "dest": "cs2/raw/faceit_mirage.dem",
+   "url": "https://github.com/pnxenopoulos/awpy-fixtures/releases/download/faceit-de_mirage-6de46e85/faceit-de_mirage-6de46e85.dem",
+   "sha256": "b1295d828786d637b06c2d2accbdc219600301642bd3a2f263ccdc404689ffde",
+   "default": false
+  },
+  {
+   "game": "cs2",
+   "dest": "cs2/raw/esea_dust2.dem",
+   "url": "https://github.com/pnxenopoulos/awpy-fixtures/releases/download/esea-de_dust2-2c5bdd12/esea-de_dust2-2c5bdd12.dem",
+   "sha256": "734173f2fc1465283dda6875ae5d19ad7ff2e4726627f7d42f6e14202a79356a",
+   "default": false
+  },
+  {
+   "game": "cs2",
+   "dest": "cs2/raw/hltv_pro_inferno.dem",
+   "url": "https://github.com/pnxenopoulos/awpy-fixtures/releases/download/hltv-de_inferno-2395492/hltv-de_inferno-2395492.dem",
+   "sha256": "054d633e5ec0610d08cbbe25c9ecc7737bae3da80bba8711c5b70419b97cf913",
+   "default": false
+  },
+  {
+   "game": "cs2",
+   "dest": "cs2/raw/hltv_pro_mirage.dem",
+   "url": "https://github.com/pnxenopoulos/awpy-fixtures/releases/download/hltv-de_mirage-2394170/hltv-de_mirage-2394170.dem",
+   "sha256": "321cfe8bd30501f9040a9ae0cfaca900b6db1cc6cc6ab026f56b86a5b3e20ddc",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/pro_liquid_vs_magicsquad_oregon/Match-2023-03-25_14-24-02-118-R01.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/a3eb9419c7063fc9a834d78acb6bf97200d0f0d2/dissect/test/data/replays/valid/Y8S1/LIQ_MAG/Match-2023-03-25_14-24-02-118-R01.rec",
+   "sha256": "42ddfc1040f2ff579cacef9114654b2021ffa31f52a4ac57bf9038fa602ac355",
+   "default": true
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/pro_liquid_vs_magicsquad_oregon/Match-2023-03-25_14-24-02-118-R06.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/a3eb9419c7063fc9a834d78acb6bf97200d0f0d2/dissect/test/data/replays/valid/Y8S1/LIQ_MAG/Match-2023-03-25_14-24-02-118-R06.rec",
+   "sha256": "16940df337217e3977d8df0c290ba0885dbc9f3df7ae42a8ba661ff0af05aa40",
+   "default": true
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/pro_liquid_vs_magicsquad_oregon/Match-2023-03-25_14-24-02-118-R08.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/a3eb9419c7063fc9a834d78acb6bf97200d0f0d2/dissect/test/data/replays/valid/Y8S1/LIQ_MAG/Match-2023-03-25_14-24-02-118-R08.rec",
+   "sha256": "d9526c9ae5b98b4094d985d3ace27132b8ec61b8031c613595b7b18155056567",
+   "default": true
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s1_quick_oregon.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/754a7213ee9204fc04864d976f03db73b70d2ce8/dissect/test/data/replays/valid/Y8S1/quick_1.rec",
+   "sha256": "68993745eb95c53c7dc1e2b0a98f14f3c1295f0b122f9b9fe363fdfa84c90cde",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s1_quick_house.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/754a7213ee9204fc04864d976f03db73b70d2ce8/dissect/test/data/replays/valid/Y8S1/quick_2.rec",
+   "sha256": "281cf4b3a464f22c76340519ae884c928283db08b492d01e27028c0de16e8e6f",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s1_ranked_chalet.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/754a7213ee9204fc04864d976f03db73b70d2ce8/dissect/test/data/replays/valid/Y8S1/ranked_1.rec",
+   "sha256": "cc26e020695b9f4c8df698726c5eb12e22ad103cdf91d2120202ae5eb341de41",
+   "default": true
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s1_ranked_bank.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/754a7213ee9204fc04864d976f03db73b70d2ce8/dissect/test/data/replays/valid/Y8S1/ranked_2.rec",
+   "sha256": "64ec5791d89e1f106ae9fbb9875ba7b0fafde8ee9db403dceddb937b09224e47",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s2_ranked_chalet.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/74301ebca29c473147aed36d4ff4ad4043291f91/dissect/test/data/replays/valid/Y8S2/attacker_recorder_site_test.rec",
+   "sha256": "9041bc07936ce1c0b44c637dd2f09cf127931aa715c06a2492da877f42f63477",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s2_ranked_oregon.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/74301ebca29c473147aed36d4ff4ad4043291f91/dissect/test/data/replays/valid/Y8S2/defender_recorder_site_test_1.rec",
+   "sha256": "1fa0c91d11ff38033d57005e00fc795705267b0822a819353b8433c37016bb88",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s2_ranked_chalet_2.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/74301ebca29c473147aed36d4ff4ad4043291f91/dissect/test/data/replays/valid/Y8S2/defender_recorder_site_test_2.rec",
+   "sha256": "5646c5bf02906377f7f586241787de5377e8059ef344b5990d9db7cc2a9e200b",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s2_standard_clubhouse_vega_vs_needone.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/74301ebca29c473147aed36d4ff4ad4043291f91/dissect/test/data/replays/valid/Y8S2/spectator_recorder_site_test_1.rec",
+   "sha256": "f159e19d58e7c281c1f3f7e73f70e35269aaa74ffd99c5478f53465d0ae058a4",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s4_standard_border.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/33cf9a21bf1dbacfda165c6cb2bfa689f48f95b0/dissect/test/data/replays/valid/Y8S4/Match-2023-12-07_20-35-16-59-R01.rec",
+   "sha256": "bd680181c9ed3a24937e65bb6f38cc3e33c71c2b6e94ad5db4b18cf974a380ab",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y8s4_custom_clubhouse.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/4dbcf5bbaeacbc10e86076c49fe9732bf18ba27a/dissect/test/data/replays/valid/Y8S4/custom-game-bug.rec",
+   "sha256": "3826096e4f81ef2f56e15f97d7e0bf8856d0337f03affb4716ab8484e4e93dff",
+   "default": false
+  },
+  {
+   "game": "r6",
+   "dest": "r6/raw/y9s1_custom_chalet.rec",
+   "url": "https://raw.githubusercontent.com/redraskal/r6-dissect/6c3efa1f9e7ef7dd9e7fbc61234e6a310bef960e/dissect/test/data/replays/valid/Y9S1/custom_1.rec",
+   "sha256": "55031b71875a25846dfe0d9bb48713be1c8111e2638bc42d83613134950fb79d",
+   "default": false
+  }
+ ]
+}

@@ -1,0 +1,5 @@
+Map images and collision meshes bundled so reports work offline.
+
+radars/de_*.png, cs_*.png, ar_*.png   CS2 radar images, from awpy's map assets (github.com/pnxenopoulos/awpy)
+radars/<uuid>.png                     VALORANT minimaps, from valorant-api.com (file name is the map's uuid)
+meshes/*.mesh.xz                      CS2 line-of-sight meshes, from awpy, xz compressed

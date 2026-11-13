@@ -1,0 +1,33 @@
+{
+  "tick_rate": 128.0,
+  "game": "valorant",
+  "map_name": "Triad",
+  "frame_every": 8,
+  "teams": {
+    "Team A": [
+      "Chamber",
+      "Miks 2",
+      "Yoru",
+      "Waylay",
+      "Sage"
+    ],
+    "Team B": [
+      "Miks",
+      "Jett",
+      "Reyna",
+      "Neon",
+      "Iso"
+    ]
+  },
+  "eye_height": {
+    "stand": 154.0,
+    "crouch": 112.0
+  },
+  "units": "cm",
+  "anonymized": true,
+  "event": "Swiftplay, patch 12.06",
+  "mode": "Swiftplay",
+  "patch": "12.06",
+  "match_id": "valorant:haven:swiftplay:12.06",
+  "unitick_format": 1
+}

@@ -1,0 +1,31 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_dust2",
+  "frame_every": 4,
+  "server": "eBot :: GamerLegion vs BetBoom Team",
+  "teams": {
+    "BetBoom Team": [
+      "Ax1Le",
+      "Magnojez",
+      "Boombl4",
+      "S1ren",
+      "ArtFr0st"
+    ],
+    "GamerLegion": [
+      "Tauson",
+      "REZ",
+      "PR",
+      "Kursy",
+      "ztr"
+    ]
+  },
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "event": "HLTV pro match",
+  "source": "hltv.org demo via huggingface.co/datasets/aldigobbler/cs2demos (gamerlegion-vs-betboom-m1-dust2.dem)",
+  "unitick_format": 1,
+  "library_key": "hltv:gamerlegion-vs-betboom-m1-dust2"
+}

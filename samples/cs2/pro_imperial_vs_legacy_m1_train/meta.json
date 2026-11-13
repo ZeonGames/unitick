@@ -1,0 +1,32 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_train",
+  "frame_every": 4,
+  "server": "Counter-Strike 2",
+  "teams": {
+    "Legacy": [
+      "Coach | chucky",
+      "lux",
+      "saadzin",
+      "n1ssim",
+      "dumau",
+      "latto"
+    ],
+    "Imperial": [
+      "try",
+      "noway",
+      "chelo",
+      "VINI",
+      "Shr"
+    ]
+  },
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "event": "HLTV pro match",
+  "source": "hltv.org demo via huggingface.co/datasets/aldigobbler/cs2demos (imperial-vs-legacy-m1-train.dem)",
+  "unitick_format": 1,
+  "library_key": "hltv:imperial-vs-legacy-m1-train"
+}

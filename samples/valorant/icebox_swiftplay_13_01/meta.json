@@ -1,0 +1,33 @@
+{
+  "tick_rate": 128.0,
+  "game": "valorant",
+  "map_name": "Port",
+  "frame_every": 8,
+  "teams": {
+    "Team A": [
+      "Clove",
+      "Phoenix",
+      "Omen",
+      "Raze 2",
+      "Jett"
+    ],
+    "Team B": [
+      "Raze",
+      "Sage",
+      "Jett 2",
+      "Clove 2",
+      "Reyna"
+    ]
+  },
+  "eye_height": {
+    "stand": 154.0,
+    "crouch": 112.0
+  },
+  "units": "cm",
+  "anonymized": true,
+  "event": "Swiftplay, patch 13.01",
+  "mode": "Swiftplay",
+  "patch": "13.01",
+  "match_id": "valorant:icebox:swiftplay:13.01",
+  "unitick_format": 1
+}

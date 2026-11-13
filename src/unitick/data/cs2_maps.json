@@ -1,0 +1,104 @@
+{
+ "ar_baggage": {
+  "pos_x": -1316.0,
+  "pos_y": 1288.0,
+  "scale": 2.539062,
+  "lower_below_z": -5.0
+ },
+ "ar_shoots": {
+  "pos_x": -1368.0,
+  "pos_y": 1952.0,
+  "scale": 2.6875,
+  "lower_below_z": null
+ },
+ "ar_shoots_night": {
+  "pos_x": -1368.0,
+  "pos_y": 1952.0,
+  "scale": 2.6875,
+  "lower_below_z": null
+ },
+ "cs_italy": {
+  "pos_x": -2647.0,
+  "pos_y": 2592.0,
+  "scale": 4.6,
+  "lower_below_z": null
+ },
+ "cs_office": {
+  "pos_x": -1838.0,
+  "pos_y": 1858.0,
+  "scale": 4.1,
+  "lower_below_z": null
+ },
+ "de_ancient": {
+  "pos_x": -2953.0,
+  "pos_y": 2164.0,
+  "scale": 5.0,
+  "lower_below_z": null
+ },
+ "de_ancient_night": {
+  "pos_x": -2953.0,
+  "pos_y": 2164.0,
+  "scale": 5.0,
+  "lower_below_z": null
+ },
+ "de_anubis": {
+  "pos_x": -2796.0,
+  "pos_y": 3328.0,
+  "scale": 5.22,
+  "lower_below_z": null
+ },
+ "de_cache": {
+  "pos_x": -2000.0,
+  "pos_y": 3250.0,
+  "scale": 5.5,
+  "lower_below_z": null
+ },
+ "de_dust2": {
+  "pos_x": -2476.0,
+  "pos_y": 3239.0,
+  "scale": 4.4,
+  "lower_below_z": null
+ },
+ "de_inferno": {
+  "pos_x": -2087.0,
+  "pos_y": 3870.0,
+  "scale": 4.9,
+  "lower_below_z": null
+ },
+ "de_mirage": {
+  "pos_x": -3230.0,
+  "pos_y": 1713.0,
+  "scale": 5.0,
+  "lower_below_z": null
+ },
+ "de_nuke": {
+  "pos_x": -3453.0,
+  "pos_y": 2887.0,
+  "scale": 7.0,
+  "lower_below_z": -495.0
+ },
+ "de_overpass": {
+  "pos_x": -4831.0,
+  "pos_y": 1781.0,
+  "scale": 5.2,
+  "lower_below_z": null
+ },
+ "de_train": {
+  "pos_x": -2308.0,
+  "pos_y": 2078.0,
+  "scale": 4.082077,
+  "lower_below_z": -50.0
+ },
+ "de_vertigo": {
+  "pos_x": -3168.0,
+  "pos_y": 1762.0,
+  "scale": 4.0,
+  "lower_below_z": 11700.0
+ },
+ "rush_001": {
+  "pos_x": -11240.0,
+  "pos_y": 9944.0,
+  "scale": 18.910156,
+  "lower_below_z": null
+ }
+}

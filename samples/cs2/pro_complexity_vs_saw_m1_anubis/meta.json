@@ -1,0 +1,31 @@
+{
+  "tick_rate": 64.0,
+  "game": "cs2",
+  "map_name": "de_anubis",
+  "frame_every": 4,
+  "server": "eBot :: Complexity vs SAW",
+  "teams": {
+    "SAW": [
+      "ag1L",
+      "MUTiRiS",
+      "story",
+      "krazy",
+      "aragornN"
+    ],
+    "Complexity": [
+      "JT",
+      "Grim",
+      "Cxzi",
+      "hallzerk",
+      "nicx"
+    ]
+  },
+  "eye_height": {
+    "stand": 64.0,
+    "crouch": 46.0
+  },
+  "event": "HLTV pro match",
+  "source": "hltv.org demo via huggingface.co/datasets/aldigobbler/cs2demos (complexity-vs-saw-m1-anubis.dem)",
+  "unitick_format": 1,
+  "library_key": "hltv:complexity-vs-saw-m1-anubis"
+}

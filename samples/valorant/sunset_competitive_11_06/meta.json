@@ -1,0 +1,33 @@
+{
+  "tick_rate": 128.0,
+  "game": "valorant",
+  "map_name": "Juliett",
+  "frame_every": 8,
+  "teams": {
+    "Team A": [
+      "Sova 2",
+      "Neon",
+      "Raze",
+      "Vyse",
+      "Omen"
+    ],
+    "Team B": [
+      "Reyna",
+      "Jett",
+      "Clove",
+      "Sova",
+      "Chamber"
+    ]
+  },
+  "eye_height": {
+    "stand": 154.0,
+    "crouch": 112.0
+  },
+  "units": "cm",
+  "anonymized": true,
+  "event": "Competitive, patch 11.06",
+  "mode": "Competitive",
+  "patch": "11.06",
+  "match_id": "valorant:sunset:competitive:11.06",
+  "unitick_format": 1
+}

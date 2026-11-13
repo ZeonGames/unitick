@@ -1,0 +1,52 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "unitick"
+version = "0.1.0"
+description = "See why you died in your last FPS match, and your odds of surviving with every other play. Offline replay analysis for VALORANT, CS2 and Rainbow Six Siege X."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [{ name = "Rudransh Tripathi" }, { name = "Zeon Labs" }]
+keywords = ["cs2", "counter-strike", "valorant", "rainbow-six-siege", "esports", "analytics", "demo", "replay", "polars"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Intended Audience :: End Users/Desktop",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Games/Entertainment :: First Person Shooters",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "License :: OSI Approved :: MIT License",
+]
+dependencies = ["polars>=1.20", "numpy>=1.26"]
+
+[project.urls]
+Homepage = "https://gamesbyzeon.com"
+Issues = "https://github.com/ZeonGames/unitick/issues"
+
+[project.optional-dependencies]
+cs2 = ["awpy>=3.1"]
+dev = ["pytest>=8", "ruff>=0.6"]
+all = ["unitick[cs2,dev]"]
+
+[project.scripts]
+unitick = "unitick.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unitick"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["demo: needs a real CS2 demo (set UNITICK_DEMO=/path/to/match.dem)"]
+# Windows reads files as cp1252 unless told otherwise: every open must say utf-8.
+filterwarnings = ["error::EncodingWarning"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"

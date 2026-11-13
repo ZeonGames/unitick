@@ -1,0 +1,14 @@
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+*.dem
+*.html
+!src/unitick/render/app.html
+!web/index.html
+dist/
+.venv/
+setup_log.txt
+samples/*/raw/
+samples/library/parts/
+node_modules/
