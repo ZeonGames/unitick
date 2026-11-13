@@ -32,17 +32,17 @@
 
 ## See it
 
-From the bundled Vitality vs B8 sample (IEM Atlanta 2026). Click a still to open the short clip. Run `unitick app` and open the same match to drive it yourself.
+From the bundled Vitality vs B8 sample (IEM Atlanta 2026). The clips loop. Run `unitick app` and open the same match to drive it yourself.
 
 <table>
   <tr>
     <td align="center" width="50%">
       <b>Deaths</b> - why each player died, and their odds with every other play<br />
-      <a href="docs/readme/feature-deaths.webm"><img src="docs/readme/feature-deaths.png" alt="Deaths tab: what-if odds for holding, pushing and falling back" width="100%" /></a>
+      <img src="docs/readme/feature-deaths.gif" width="100%" alt="Deaths tab: what-if odds for holding, pushing and falling back" />
     </td>
     <td align="center" width="50%">
       <b>Replay</b> - hit Play on the 2D radar, then flip to 3D and orbit<br />
-      <a href="docs/readme/feature-replay.webm"><img src="docs/readme/feature-replay.png" alt="Replay in 3D with players moving on Mirage" width="100%" /></a>
+      <img src="docs/readme/feature-replay.gif" width="100%" alt="Replay in 3D with players moving on Mirage" />
     </td>
   </tr>
   <tr>
