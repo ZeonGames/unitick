@@ -358,7 +358,7 @@ Thank you to Peter Xenopoulos and the awpy contributors: awpy 3 is the foundatio
 
 ## Contributing
 
-New game adapters and scoreboard cross-checks are especially welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
+New game adapters and scoreboard cross-checks are especially welcome. See [CONTRIBUTING.md](CONTRIBUTING.md). This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
 
 - Issues: https://github.com/ZeonGames/unitick/issues
 - Security: email hi@gamesbyzeon.com (do not open a public issue)

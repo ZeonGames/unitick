@@ -1,5 +1,8 @@
 # Contributing
 
+This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+By participating, you agree to uphold it. Report unacceptable behavior to hi@gamesbyzeon.com.
+
 ## Dev setup
 
 Always use a local `.venv`. A bare `pip install` into the system/user Python often leaves `unitick` off PATH on Windows.
