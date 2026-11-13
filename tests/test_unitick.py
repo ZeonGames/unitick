@@ -380,6 +380,14 @@ def test_samples_command(tmp_path):
     assert 'class="err"' not in page and page.count("<li>") >= 15
 
 
+def test_discover_skips_raw_vrf_without_a_native_parser(monkeypatch):
+    from unitick import samples
+    monkeypatch.setattr("unitick.adapters.valorant.find_vrfkit", lambda: None)
+    labels = [label for label, _ in samples.discover(SAMPLES, raw=False)]
+    assert any(label.startswith("VALORANT:") and "pre-parsed" in label for label in labels)
+    assert not any(label.startswith("VALORANT: solo_") for label in labels)
+
+
 # ---------------------------------------------------------------- video pairing
 def _tiny_mp4(path: Path, seconds: int = 7, scale: int = 1000) -> Path:
     """Minimal ISO-BMFF file with just ftyp + moov/mvhd: enough for duration()."""

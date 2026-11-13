@@ -25,8 +25,11 @@ def discover(root: Path, raw: bool) -> list[tuple[str, Path]]:
         out.append((f"VALORANT: {d.parent.name} (pre-parsed)", d.parent))
     for d in sorted((root / "valorant").glob("*/manifest.json")):
         out.append((f"VALORANT: {d.parent.name}", d.parent))
-    for f in sorted((root / "valorant").rglob("*.vrf")):
-        out.append((f"VALORANT: {f.stem}", f))
+    # Raw .vrf files need a native vrfkit. The repo only ships Linux and Windows builds.
+    from .adapters.valorant import find_vrfkit
+    if find_vrfkit():
+        for f in sorted((root / "valorant").rglob("*.vrf")):
+            out.append((f"VALORANT: {f.stem}", f))
     for f in sorted((root / "r6").glob("*.json")):
         out.append((f"R6: {f.stem}", f))
     if raw:

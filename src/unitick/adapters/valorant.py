@@ -92,25 +92,47 @@ def _strings(df: pl.DataFrame) -> pl.DataFrame:
     return df.with_columns(pl.col(pl.Categorical).cast(pl.String))
 
 
+def _executable_for_this_os(path: Path) -> bool:
+    """True when ``path`` is a binary this OS can exec.
+
+    ``tools/vrfkit`` is a Linux build. macOS would otherwise chmod it and die
+    with ``Exec format error`` on every ``.vrf``.
+    """
+    try:
+        head = path.read_bytes()[:4]
+    except OSError:
+        return False
+    if sys.platform == "win32":
+        return head.startswith(b"MZ")
+    if sys.platform == "darwin":
+        return head in (
+            b"\xfe\xed\xfa\xce", b"\xfe\xed\xfa\xcf",  # Mach-O, big endian
+            b"\xce\xfa\xed\xfe", b"\xcf\xfa\xed\xfe",  # Mach-O, little endian
+            b"\xca\xfe\xba\xbe", b"\xca\xfe\xba\xbf",  # fat / fat64
+        )
+    return head == b"\x7fELF"
+
+
 def find_vrfkit(explicit: str | Path | None = None) -> str | None:
     """Locate the vrfkit binary: explicit path, $PATH, or next to unitick's tools."""
     if explicit:
         return str(explicit)
     for cand in ("vrfkit", "vrfkit.exe"):
         p = shutil.which(cand)
-        if p:
+        if p and _executable_for_this_os(Path(p)):
             return p
     here = Path(__file__).resolve().parents[3] / "tools"
     for cand in (("vrfkit.exe", "vrfkit") if sys.platform == "win32" else ("vrfkit",)):
         exe = here / cand
-        if exe.exists():
-            if sys.platform != "win32" and not os.access(exe, os.X_OK):
-                # zip extraction often drops the executable bit on the bundled binary
-                try:
-                    exe.chmod(exe.stat().st_mode | 0o111)
-                except OSError:
-                    pass
-            return str(exe)
+        if not exe.is_file() or not _executable_for_this_os(exe):
+            continue
+        if sys.platform != "win32" and not os.access(exe, os.X_OK):
+            # zip extraction often drops the executable bit on the bundled binary
+            try:
+                exe.chmod(exe.stat().st_mode | 0o111)
+            except OSError:
+                pass
+        return str(exe)
     return None
 
 
